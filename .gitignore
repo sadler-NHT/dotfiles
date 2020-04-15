@@ -1,5 +1,9 @@
+# BUCK
+buck-out
+
 # Compiled Python files
 *.pyc
+.python-version
 
 # Folder view configuration files
 .DS_Store

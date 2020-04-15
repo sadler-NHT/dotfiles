@@ -1,0 +1,76 @@
+alias ls='ls -GFh'
+alias gh='history | grep '
+alias db='ssh jads-dbx'
+alias dbsync='devbox-sync'
+
+alias dorig='find . -name \*.orig -delete'
+
+## Project Generation
+alias gen='(cd ~/src/xplat/ && tools/update_repo/update_repo.py && make project_dbapp)'
+
+## Project Open
+alias op='open -a "Xcode" ~/src/xplat/buck-out/gen/dbapp-ios/Dropbox/Dropbox.xcodeproj/project.xcworkspace'
+alias opb='open -a "Xcode-beta" ~/src/xplat/buck-out/gen/dbapp-ios/Dropbox/Dropbox.xcodeproj/project.xcworkspace'
+
+## Project Generation + Open
+alias go='gen;op'
+
+alias point-client='~/src/xplat/tools/ios/setup_for_dev_vm.py --devbox jads --project dbapp'
+alias debugserver='mbzl itest-run //services/metaserver:metaserver'
+alias mkbuild='arc test xplat_dbapp_ios_and_upload_vm'
+alias opds='open -a "Xcode" /Users/jads/src/xplat/buck-out/gen/docscanner/DocScanner.xcodeproj'
+
+alias gends='(cd ~/src/xplat/ && make install_buck && tools/update_repo/update_repo.py && make project_docscanner)'
+alias gods='gends;opds'
+
+# Testing
+alias startsim='~/src/xplat/tools/buck/ensure_simulator_booted.rb "iPhone 7"'
+
+# Android
+alias dbxut="(cd $HOME/src/xplat/android/ && ./gradlew testDebugUnitTest :dbapp:Dropbox:testNormalDebugUnitTest)"
+
+# Homebrew
+export PATH="/usr/local/sbin:$PATH"
+
+# From repo_setup:
+export PATH="/Users/jads/src/xplat/tools/buck/bin:$PATH"
+export ANDROID_HOME="/Users/jads/Library/Android/sdk"
+export ANDROID_NDK="/Users/jads/Library/Android/ndk"
+export ANDROID_NDK_HOME="/Users/jads/Library/Android/ndk"
+export PATH="/Users/jads/Library/Android/sdk/platform-tools:/Users/jads/Library/Android/sdk/tools:/Users/jads/Library/Android/ndk:$PATH"
+
+# Git Helpers:
+export PATH="/Users/jads/GitChildBranchHelpers/bin:$PATH"
+
+source /Users/jads/GitChildBranchHelpers/bash_zsh_git_helper_aliases.sh
+
+function jelp() {
+read -r -d '' VAR <<- EOM
+------------
+db          | ssh
+gen         | submodule_update
+op          | open project
+opb         | open project (beta)
+go          | gen + op
+point-client| configures the local client to point at the devbox
+mkbuild     | creates a test build on CIBO
+------------
+EOM
+echo "$VAR"
+}
+
+function b() {
+BUCK_PATH="$(buck root)"
+MY_PATH="$(pwd)"
+TARGET_PATH="/${MY_PATH#$BUCK_PATH}"
+BUILD_PATH=$TARGET_PATH$1
+
+echo "$BUILD_PATH"
+buck build "$BUILD_PATH"
+}
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
+    # if not found in /usr/local/etc, try the brew --prefix location
+    [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
+        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+}
