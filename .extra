@@ -18,10 +18,16 @@ alias go='gen;op'
 alias point-client='~/src/xplat/tools/ios/setup_for_dev_vm.py --devbox jads --project dbapp'
 alias debugserver='mbzl itest-run //services/metaserver:metaserver'
 alias mkbuild='arc test xplat_dbapp_ios_and_upload_vm'
-alias opds='open -a "Xcode" /Users/jads/src/xplat/buck-out/gen/docscanner/DocScanner.xcodeproj'
+alias mkdoc='arc test xplat_docscanner_ios_and_upload'
 
+alias opds='open -a "Xcode" /Users/jads/src/xplat/buck-out/gen/docscanner/DocScanner.xcodeproj'
 alias gends='(cd ~/src/xplat/ && make install_buck && tools/update_repo/update_repo.py && make project_docscanner)'
 alias gods='gends;opds'
+
+
+alias opt='open -a "Xcode" ~/src/xplat/buck-out/gen/transfers/Transfers.xcodeproj'
+alias gent='(cd ~/src/xplat/ && make install_buck && tools/update_repo/update_repo.py && make project_transfers)'
+alias got='gent;opt'
 
 # Testing
 alias startsim='~/src/xplat/tools/buck/ensure_simulator_booted.rb "iPhone 7"'
@@ -42,7 +48,7 @@ export PATH="/Users/jads/Library/Android/sdk/platform-tools:/Users/jads/Library/
 # Git Helpers:
 export PATH="/Users/jads/GitChildBranchHelpers/bin:$PATH"
 
-source /Users/jads/GitChildBranchHelpers/bash_zsh_git_helper_aliases.sh
+source /Users/jads/src/GitChildBranchHelpers/bash_zsh_git_helper_aliases.sh
 
 function jelp() {
 read -r -d '' VAR <<- EOM
@@ -56,21 +62,29 @@ point-client| configures the local client to point at the devbox
 mkbuild     | creates a test build on CIBO
 ------------
 EOM
-echo "$VAR"
+    echo "$VAR"
 }
 
-function b() {
-BUCK_PATH="$(buck root)"
-MY_PATH="$(pwd)"
-TARGET_PATH="/${MY_PATH#$BUCK_PATH}"
-BUILD_PATH=$TARGET_PATH$1
+function agr { ag -0 -l "$1" | AGR_FROM="$1" AGR_TO="$2" xargs -0 perl -pi -e 's/$ENV{AGR_FROM}/$ENV{AGR_TO}/g'; }
 
-echo "$BUILD_PATH"
-buck build "$BUILD_PATH"
+function b() {
+    BUCK_PATH="$(buck root)"
+    MY_PATH="$(pwd)"
+    TARGET_PATH="/${MY_PATH#$BUCK_PATH}"
+    BUILD_PATH=$TARGET_PATH$1
+    
+    echo "$BUILD_PATH"
+    buck build "$BUILD_PATH"
+}
+
+function vv() {
+    buck query "attrfilter('module_name', '$1', '//...')" | tail -1
 }
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
     # if not found in /usr/local/etc, try the brew --prefix location
     [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
-        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+    . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
 }
+
+# ./buildifier --lint=fix $(ag -l -g BUCK)
