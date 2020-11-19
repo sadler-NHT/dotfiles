@@ -1,54 +1,10 @@
 alias ls='ls -GFh'
 alias gh='history | grep '
-alias db='ssh jads-dbx'
-alias dbsync='devbox-sync'
 
 alias dorig='find . -name \*.orig -delete'
 
-## Project Generation
-alias gen='(cd ~/src/xplat/ && tools/update_repo/update_repo.py && make project_dbapp)'
-
-## Project Open
-alias op='open -a "Xcode" ~/src/xplat/buck-out/gen/dbapp-ios/Dropbox/Dropbox.xcodeproj/project.xcworkspace'
-alias opb='open -a "Xcode-beta" ~/src/xplat/buck-out/gen/dbapp-ios/Dropbox/Dropbox.xcodeproj/project.xcworkspace'
-
-## Project Generation + Open
-alias go='gen;op'
-
-alias point-client='~/src/xplat/tools/ios/setup_for_dev_vm.py --devbox jads --project dbapp'
-alias debugserver='mbzl itest-run //services/metaserver:metaserver'
-alias mkbuild='arc test xplat_dbapp_ios_and_upload_vm'
-alias mkdoc='arc test xplat_docscanner_ios_and_upload'
-
-alias opds='open -a "Xcode" /Users/jads/src/xplat/buck-out/gen/docscanner/DocScanner.xcodeproj'
-alias gends='(cd ~/src/xplat/ && make install_buck && tools/update_repo/update_repo.py && make project_docscanner)'
-alias gods='gends;opds'
-
-
-alias opt='open -a "Xcode" ~/src/xplat/buck-out/gen/transfers/Transfers.xcodeproj'
-alias gent='(cd ~/src/xplat/ && make install_buck && tools/update_repo/update_repo.py && make project_transfers)'
-alias got='gent;opt'
-
-# Testing
-alias startsim='~/src/xplat/tools/buck/ensure_simulator_booted.rb "iPhone 7"'
-
-# Android
-alias dbxut="(cd $HOME/src/xplat/android/ && ./gradlew testDebugUnitTest :dbapp:Dropbox:testNormalDebugUnitTest)"
-
 # Homebrew
 export PATH="/usr/local/sbin:$PATH"
-
-# From repo_setup:
-export PATH="/Users/jads/src/xplat/tools/buck/bin:$PATH"
-export ANDROID_HOME="/Users/jads/Library/Android/sdk"
-export ANDROID_NDK="/Users/jads/Library/Android/ndk"
-export ANDROID_NDK_HOME="/Users/jads/Library/Android/ndk"
-export PATH="/Users/jads/Library/Android/sdk/platform-tools:/Users/jads/Library/Android/sdk/tools:/Users/jads/Library/Android/ndk:$PATH"
-
-# Git Helpers:
-export PATH="/Users/jads/GitChildBranchHelpers/bin:$PATH"
-
-source /Users/jads/src/GitChildBranchHelpers/bash_zsh_git_helper_aliases.sh
 
 function jelp() {
 read -r -d '' VAR <<- EOM

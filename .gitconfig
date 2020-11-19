@@ -84,7 +84,7 @@
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = /Users/jads/.gitignore
+	excludesfile = /Users/steven/.gitignore
 	attributesfile = ~/.gitattributes
 
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error
@@ -178,8 +178,8 @@
 
 	insteadOf = "gist:"
 [user]
-	name = Jeff Adler
-	email = jads@dropbox.com
+	name = Steven Adler
+	email = sadler23sadler@gmail.com
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -197,4 +197,4 @@
 [mergetool]
 	prompt = false
 [commit]
-	template = /Users/jads/.stCommitMsg
+	template = /Users/steven/.stCommitMsg
