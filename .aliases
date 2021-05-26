@@ -9,11 +9,16 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias g="git"
-
-alias dev="cd ~/Developer"
-alias dl="cd ~/Downloads"
 alias gdiff="git difftool -d --no-symlinks"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias dev="cd ~/Developer"
+alias g="git"
+alias devscale="cd ~/Developer/NHT-Scale"
+alias devpy="cd ~/Developer/PythonDevelopment/"
+alias rest="sudo shutdown -s now"
+alias pc="pre-commit"
+alias whl="python setup.py bdist_wheel"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
