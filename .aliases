@@ -10,9 +10,10 @@ alias -- -="cd -"
 
 # Shortcuts
 alias g="git"
-alias h="history"
+
 alias dev="cd ~/Developer"
 alias dl="cd ~/Downloads"
+alias gdiff="git difftool -d --no-symlinks"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -145,4 +146,7 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
+alias reload="exec ${SHELL} -l"
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'

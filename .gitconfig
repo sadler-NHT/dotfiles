@@ -29,7 +29,10 @@
 	branches = branch -a
 	remotes = remote -v
 
-	# Amend the currently staged files to the latest commit
+	# List aliases.
+	aliases = config --get-regexp alias
+
+	# Amend the currently staged files to the latest commit.
 	amend = commit --amend --reuse-message=HEAD
 
 	# Credit an author on the latest commit
@@ -81,10 +84,15 @@
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
 
+[branch]
+
+	# Show most recently changed branches first.
+	sort = -committerdate
+
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = /Users/steven/.gitignore
+	excludesfile = /Users/sadler/.gitignore
 	attributesfile = ~/.gitattributes
 
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error
@@ -99,6 +107,10 @@
 	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
 	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 	precomposeunicode = false
+
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
 
 [color]
 
@@ -125,11 +137,16 @@
 	changed = green
 	untracked = cyan
 
+[commit]
+
+	# https://help.github.com/articles/signing-commits-using-gpg/
+	gpgsign = true
+
 [diff]
 
 	# Detect copies as well as renames
 	renames = copies
-	tool = Kaleidoscope
+	tool = diffmerge
 
 [diff "bin"]
 
@@ -145,7 +162,7 @@
 
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
-	tool = Kaleidoscope
+	tool = diffmerge
 
 [push]
 
@@ -179,22 +196,16 @@
 	insteadOf = "gist:"
 [user]
 	name = Steven Adler
-	email = sadler23sadler@gmail.com
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	email = sadler@nexthealthtechnologies.com
+[difftool "diffmerge"]
+	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+	path = /usr/local/bin/diffmerge
+[mergetool "diffmerge"]
+	cmd = diffmerge \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
-	keepBackup = false
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
 [mergetool]
 	prompt = false
 [commit]
-	template = /Users/steven/.stCommitMsg
+	template = /Users/sadler/.stCommitMsg
